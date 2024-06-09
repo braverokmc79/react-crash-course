@@ -4,7 +4,7 @@ import { PostType} from "../components/PostsList";
 import Modal from "../components/Modal";
 import { useNavigate } from "react-router-dom";
 
-export const initializeData = {
+const initializeData = {
   id: "",
   author: "",
   body: "",

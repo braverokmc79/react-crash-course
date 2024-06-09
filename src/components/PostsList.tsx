@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Post from "./Post";
+import { useLoaderData } from "react-router-dom";
 
 export type PostType = {
   id: string;
@@ -7,29 +8,17 @@ export type PostType = {
   body: string;
 };
 
-
-const PostsList: React.FC= () => {
-  const [posts, setPosts] = useState<PostType[]>([]);
+const PostsList: React.FC = () => {
+  const posts = useLoaderData() as PostType[];
   const [isFetching, setIsFetching] = useState(false);
-
+  
   useEffect(() => {
-    try {
+    if (!posts) {
       setIsFetching(true);
-      const postList = async () => {
-        const respose = await fetch("http://localhost:8080/posts");
-
-        if (respose.ok) {
-          const resData = await respose.json();
-          setPosts(resData.posts);
-          setIsFetching(false);
-        }
-      };
-
-      postList();
-    } catch (error) {
-      console.log("에러 : ", error);
+    } else {
+      setIsFetching(false);
     }
-  }, []);
+  }, [posts]);
 
   return (
     <>

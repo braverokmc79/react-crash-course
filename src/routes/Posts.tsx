@@ -1,8 +1,9 @@
 import { Outlet } from "react-router-dom";
 import "../App.css";
-import PostsList from "../components/PostsList";
+import PostsList, { PostType } from "../components/PostsList";
+import React from "react";
 
-function Posts() {
+const Posts: React.FC = () => {
   return (
     <>
       <Outlet />
@@ -11,6 +12,18 @@ function Posts() {
       </main>
     </>
   );
-}
+};
 
 export default Posts;
+
+export const loader = async () => {
+  const response = await fetch("http://localhost:8080/posts");
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch posts");
+  }
+
+  const resData: { posts: PostType[] } = await response.json();
+
+  return resData.posts;
+};
