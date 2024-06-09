@@ -7,11 +7,11 @@ interface PostProps {
   body: string;
 }
 
-const Post: React.FC<PostProps> = (props) => {
+const Post: React.FC<PostProps> = ({author, body}) => {
   return (
     <div className={classes.post}>
-      <p className={classes.author}>{props.author}</p>
-      <p className={classes.text}> {props.body}</p>
+      <p className={classes.author}>{author}</p>
+      <p className={classes.body}> {body}</p>
     </div>
   );
 };
