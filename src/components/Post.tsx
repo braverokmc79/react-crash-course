@@ -1,12 +1,19 @@
-import React from 'react'
+import React from "react";
+import classes from './Post.module.css'
 
-const Post:React.FC =()=> {
-  return (
-    <div>
-      <p>Maximilian</p>
-      <p>React.js is awesome!</p>
-    </div>
-  )
+
+interface PostProps {
+  author: string;
+  body: string;
 }
 
-export default Post
+const Post: React.FC<PostProps> = (props) => {
+  return (
+    <div className={classes.post}>
+      <p className={classes.author}>{props.author}</p>
+      <p className={classes.text}> {props.body}</p>
+    </div>
+  );
+};
+
+export default Post;
