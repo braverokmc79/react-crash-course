@@ -24,6 +24,8 @@ const initializeData = {
 const PostsList: React.FC<PostsListProps> = (props) => {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [newPost, setNewPost] = useState<PostType>(initializeData);
+  const [isFetching, setIsFetching] =useState(false);
+
 
   const postDataChangerHandler = (key: string, value: string) => {
     setNewPost((prevNewPost) => ({
@@ -35,12 +37,16 @@ const PostsList: React.FC<PostsListProps> = (props) => {
 
   useEffect(() => {
     try{
+      setIsFetching(true);
       const postList = async () => {
         const respose = await fetch("http://localhost:8080/posts");
-        const resData = await respose.json();
-        setPosts(resData.posts);
+        
+        if(respose.ok){
+          const resData = await respose.json();
+          setPosts(resData.posts);
+          setIsFetching(false);
+        }
       };
-
       
       postList();
     }catch(error){
@@ -91,19 +97,24 @@ const PostsList: React.FC<PostsListProps> = (props) => {
   return (
     <>
       {modalConent}
-      {posts.length > 0 && (
+      {!isFetching && posts.length > 0 && (
         <ul>
           {posts.map((post) => (
             <Post key={post.id} author={post.author} body={post.body} />
           ))}
         </ul>
       )}
-      {posts.length === 0 && (
+      {!isFetching &&  posts.length === 0 && (
         <div style={{ textAlign: "center", color: "white" }}>
           <h2>등록된 포스트가 없습니다.</h2>
           <p>포스트를 추가해 주세요!</p>
         </div>
       )}
+      {isFetching && 
+      <div style={{ textAlign: "center", color: "white" }}>
+          <h2>데이터를 가져오는 중....</h2>         
+        </div>
+      }
     </>
   );
 };
