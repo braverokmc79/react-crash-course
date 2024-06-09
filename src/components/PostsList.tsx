@@ -25,22 +25,27 @@ const PostsList:React.FC<PostsListProps>= (props) => {
     }));
   };
 
-  const addPostHandler = () => {
-    setPosts((prevPosts) => [...prevPosts, newPost]);
+  const addPostHandler = (postData:PostType) => {
+    setPosts([postData, ...posts]);
     setNewPost({ author: "", body: "" }); // 초기화
     props.setModalVisible(false);
   };
 
+  const onStopPostion=()=>{
+    props.hideModalHandler();
+    setNewPost({ author: "", body: "" }); // 초기화
+  }
 
 
   let modalConent;
   if(props.isPosting){
     modalConent = (
-      <Modal onClose={props.hideModalHandler}>
+      <Modal onClose={props.hideModalHandler}   >
         <NewPost
           newPost={newPost}
           onPostChange={postDataChangerHandler}
           addPost={addPostHandler}
+          onCancel={onStopPostion}
         />
       </Modal>
     );

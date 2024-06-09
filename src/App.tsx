@@ -14,11 +14,9 @@ function App() {
     setModalVisible(false);
   };
 
-
-
   return (
     <>
-      <MainHeader onCreatePost={showModalHandler} />
+      <MainHeader onCreatePost={showModalHandler}  />
       <main>
         <PostsList 
           isPosting={modalVisible}

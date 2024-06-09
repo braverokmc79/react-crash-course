@@ -3,15 +3,29 @@ import classes from "./NewPost.module.css";
 import { PostType } from "./PostsList";
 
 interface NewPostProps {
-    newPost: PostType
-    onPostChange: (key: string, value: string) => void;
-    addPost:()=>void;
+  newPost: PostType;
+  onPostChange: (key: string, value: string) => void;
+  addPost: (post: PostType) => void;
+  onCancel: () => void;
 }
 
-const NewPost: React.FC<NewPostProps> = ({newPost,onPostChange, addPost}) => {
+const NewPost: React.FC<NewPostProps> = ({
+  newPost,
+  onPostChange,
+  addPost,
+  onCancel,
+}) => {
+  const submitHandler = (event: React.FormEvent) => {
+    event.preventDefault();
+    const postData: PostType = {
+      author: newPost.author,
+      body: newPost.body,
+    };
+    addPost(postData);
+  };
 
   return (
-    <form className={classes.form}>
+    <form className={classes.form} onSubmit={submitHandler}>
       <p>
         <label htmlFor="body">내용</label>
         <textarea
@@ -29,14 +43,14 @@ const NewPost: React.FC<NewPostProps> = ({newPost,onPostChange, addPost}) => {
           id="author"
           required
           onChange={(event) => onPostChange("author", event.target.value)}
-
           value={newPost.author}
         />
       </p>
-      <p>
-        <button type="button" onClick={addPost}>
-          게시
+      <p className={classes.actions}>
+        <button type="button" onClick={onCancel}>
+          취소
         </button>
+        <button>작성하기</button>
       </p>
     </form>
   );
