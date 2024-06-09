@@ -1,19 +1,23 @@
 import { MdMessage, MdPostAdd } from 'react-icons/md';
 import classes from './MainHeader.module.css';
+import { Link, useNavigate } from 'react-router-dom';
 
-interface MainHeaderProps{
-    onCreatePost: () => void;
-}
 
-const  MainHeader:React.FC<MainHeaderProps>=({ onCreatePost })=> {
+const  MainHeader:React.FC=()=> {
+  const navigate =useNavigate();
+
+  const onCreatePostHandler=()=>{
+    navigate('/create-post');
+  }
+
   return (
     <header className={classes.header}>
       <h1 className={classes.logo}>
         <MdMessage />
-       리액트 포스트
+       <Link  to="/"> 리액트 포스트</Link>
       </h1>
       <p>
-        <button className={classes.button} onClick={onCreatePost}>
+        <button className={classes.button} onClick={onCreatePostHandler}  >
           <MdPostAdd size={18} />
           포트스 추가
         </button>

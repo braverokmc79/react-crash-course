@@ -8,7 +8,13 @@
     align-items: center;
     border-bottom: 2px solid #ece1fa;
   }
-  
+  .header a{
+    color: #fff;
+  }
+  .header a:hover{
+    color: #a990fb;
+  }
+
   .logo {
     font-size: 2rem;
     display: flex;
