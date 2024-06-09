@@ -3,16 +3,21 @@ import Post from "./Post";
 import NewPost from "./NewPost";
 import Modal from "./Modal";
 
+
 export type PostType = {
   author: string;
   body: string;
 };
 
-const PostsList = () => {
+interface PostsListProps{
+  isPosting: boolean;
+  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  hideModalHandler: () => void;
+}
+const PostsList:React.FC<PostsListProps>= (props) => {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [newPost, setNewPost] = useState<PostType>({ author: "", body: "" });
-  const [modalVisible, setModalVisible] = useState(true);
-
+ 
   const postDataChangerHandler = (key: string, value: string) => {
     setNewPost((prevNewPost) => ({
       ...prevNewPost,
@@ -23,17 +28,15 @@ const PostsList = () => {
   const addPostHandler = () => {
     setPosts((prevPosts) => [...prevPosts, newPost]);
     setNewPost({ author: "", body: "" }); // 초기화
-    setModalVisible(false);
+    props.setModalVisible(false);
   };
 
-  const hideModalHandler = () => {
-    setModalVisible(false);
-  };
+
 
   let modalConent;
-  if(modalVisible){
+  if(props.isPosting){
     modalConent = (
-      <Modal onClose={hideModalHandler}>
+      <Modal onClose={props.hideModalHandler}>
         <NewPost
           newPost={newPost}
           onPostChange={postDataChangerHandler}
@@ -44,9 +47,8 @@ const PostsList = () => {
   }
 
   return (
-    <>
+    <>     
       {modalConent}
-
       <ul>
         {posts.map((post) => (
           <Post key={post.author} author={post.author} body={post.body} />

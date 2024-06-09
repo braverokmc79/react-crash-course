@@ -6,8 +6,9 @@
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     animation: animate-in 1s ease-out forwards;
     display: inline-block;
-    width: 30%;
-
+    width: 25%;
+    min-height: 6rem;
+    text-align: left;
   }
   
   .author {
