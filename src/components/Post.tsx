@@ -1,18 +1,22 @@
 import React from "react";
 import classes from './Post.module.css'
+import { Link } from "react-router-dom";
 
 
 interface PostProps {
+  id: string;
   author: string;
   body: string;
 }
 
-const Post: React.FC<PostProps> = ({author, body}) => {
+const Post: React.FC<PostProps> = ({id,author, body}) => {
   return (
-    <div className={classes.post}>
-      <p className={classes.author}>{author}</p>
-      <p className={classes.body}> {body}</p>
-    </div>
+    <li className={classes.post}>
+      <Link to={id} >
+        <p className={classes.author}>{author}</p>
+        <p className={classes.body}> {body}</p>
+      </Link>
+    </li>
   );
 };
 

@@ -17,7 +17,7 @@ const PostsList: React.FC = () => {
       {posts.length > 0 && (
         <ul>
           {posts.map((post) => (
-            <Post key={post.id} author={post.author} body={post.body} />
+            <Post key={post.id}   id={post.id} author={post.author} body={post.body} />
           ))}
         </ul>
       )}
