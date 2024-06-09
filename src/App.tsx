@@ -1,16 +1,12 @@
 import './App.css'
-import Post from './components/Post'
-
+import PostsList from './components/PostsList'
 
 function App() {
 
-
   return (
-    <>
-      <Post author="Maximilian 1 " body=" reacttest 1"  />
-
-      <Post author="Maximilian 1 " body=" reacttest 1"  />
-    </>
+    <main>
+      <PostsList />
+    </main>
   )
 }
 
