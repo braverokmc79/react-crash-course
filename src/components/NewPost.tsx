@@ -9,15 +9,13 @@ interface NewPostProps {
   onCancel: () => void;
 }
 
-const NewPost: React.FC<NewPostProps> = ({
-  newPost,
-  onPostChange,
-  addPost,
-  onCancel,
-}) => {
+const NewPost: React.FC<NewPostProps> = ({newPost,onPostChange,addPost,onCancel,}) => {
+ 
+ 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     const postData: PostType = {
+      id: Math.random().toString(),
       author: newPost.author,
       body: newPost.body,
     };

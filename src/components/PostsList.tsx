@@ -5,6 +5,7 @@ import Modal from "./Modal";
 
 
 export type PostType = {
+  id:string;
   author: string;
   body: string;
 };
@@ -14,9 +15,16 @@ interface PostsListProps{
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
   hideModalHandler: () => void;
 }
+
+const initializeData={
+  id:"",
+  author: "", 
+  body: "" 
+}
+
 const PostsList:React.FC<PostsListProps>= (props) => {
   const [posts, setPosts] = useState<PostType[]>([]);
-  const [newPost, setNewPost] = useState<PostType>({ author: "", body: "" });
+  const [newPost, setNewPost] = useState<PostType>(initializeData);
  
   const postDataChangerHandler = (key: string, value: string) => {
     setNewPost((prevNewPost) => ({
@@ -26,14 +34,14 @@ const PostsList:React.FC<PostsListProps>= (props) => {
   };
 
   const addPostHandler = (postData:PostType) => {
-    setPosts([postData, ...posts]);
-    setNewPost({ author: "", body: "" }); // 초기화
+    setPosts((existingPosts)=>[postData, ...existingPosts]);
+    setNewPost(initializeData); // 초기화
     props.setModalVisible(false);
   };
 
   const onStopPostion=()=>{
     props.hideModalHandler();
-    setNewPost({ author: "", body: "" }); // 초기화
+    setNewPost(initializeData); // 초기화
   }
 
 
@@ -54,11 +62,18 @@ const PostsList:React.FC<PostsListProps>= (props) => {
   return (
     <>     
       {modalConent}
-      <ul>
-        {posts.map((post) => (
-          <Post key={post.author} author={post.author} body={post.body} />
-        ))}
-      </ul>
+     {posts.length >0 && <ul>
+          {posts.map((post) => (
+            <Post key={post.id} author={post.author} body={post.body} />
+          ))}
+        </ul>
+      }
+      {posts.length ===0 &&(
+        <div style={{textAlign:'center', color:'white'}}>
+          <h2>등록된 포스트가 없습니다.</h2>
+          <p>포스트를 추가해 주세요!</p>
+        </div>
+      )}
     </>
   );
 };
